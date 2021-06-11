@@ -621,9 +621,20 @@ class ImageReader(object):
                 "The file, \"%s\", does not exist." % path,
                 path)
 
-        self.stream = jutil.make_instance('loci/common/RandomAccessInputStream',
-                                          '(Ljava/lang/String;)V',
-                                          self.path)
+        if 'http' not in self.path:
+            self.stream = jutil.make_instance('loci/common/RandomAccessInputStream',
+                                            '(Ljava/lang/String;)V',
+                                            self.path)
+        else:
+            s3_handle = jutil.make_instance(
+                                                "loci/common/S3Handle",
+                                                '(Ljava/lang/String;)V',
+                                                self.path)
+
+            self.stream = jutil.make_instance(
+                                                'loci/common/RandomAccessInputStream',
+                                                '(loci/common/IRandomAccess;)V',
+                                                s3_handle)
 
         self.rdr = None
         class_list = get_class_list()
