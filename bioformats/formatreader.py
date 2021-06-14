@@ -634,7 +634,7 @@ class ImageReader(object):
             self.stream = jutil.make_instance(
                                                 'loci/common/RandomAccessInputStream',
                                                 #'(loci/common/IRandomAccess;)V',
-                                                '(loci/common/S3Handle;)V',
+                                                '(Lloci/common/S3Handle;)V',
                                                 s3_handle)
 
         self.rdr = None
