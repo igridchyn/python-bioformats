@@ -615,13 +615,13 @@ class ImageReader(object):
                 self.path = self.path.replace("/", os.path.sep)
             filename = os.path.split(path)[1]
 
-        if not os.path.isfile(self.path):
-            raise IOError(
-                errno.ENOENT,
-                "The file, \"%s\", does not exist." % path,
-                path)
-
         if 'https://' not in self.path and 's3://' not in self.path:
+            if not os.path.isfile(self.path):
+                raise IOError(
+                    errno.ENOENT,
+                    "The file, \"%s\", does not exist." % path,
+                    path)
+
             self.stream = jutil.make_instance('loci/common/RandomAccessInputStream',
                                             '(Ljava/lang/String;)V',
                                             self.path)
