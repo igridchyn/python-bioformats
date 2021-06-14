@@ -621,7 +621,7 @@ class ImageReader(object):
                 "The file, \"%s\", does not exist." % path,
                 path)
 
-        if 'http' not in self.path:
+        if 'https://' not in self.path and 's3://' not in self.path:
             self.stream = jutil.make_instance('loci/common/RandomAccessInputStream',
                                             '(Ljava/lang/String;)V',
                                             self.path)
